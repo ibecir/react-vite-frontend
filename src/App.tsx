@@ -16,7 +16,7 @@ const handleSelectItem = (item: Item) => {
 };
 
 function App() {
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(true);
 
   const handleButtonClick = (event: MouseEvent): void => {
     console.log(event);

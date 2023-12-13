@@ -6,16 +6,12 @@ type ButtonProps = {
   color?: ButtonColors;
   onClick: (event: MouseEvent) => void;
 };
-const Button = ({
-  children,
-  color = ButtonColors.primary,
-  onClick,
-}: ButtonProps) => {
+const Button = ({ color, children, ...rest }: ButtonProps) => {
   return (
     <button
       className={"btn btn-" + color}
       onClick={(event) => {
-        onClick(event);
+        rest.onClick(event);
       }}
     >
       {children}
