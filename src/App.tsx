@@ -7,6 +7,9 @@ import { ButtonColors } from "./constants";
 import { cities } from "./constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RefCounter from "./components/RefCounter";
+import InputRef from "./components/InputRef";
+import ButtonRef from "./components/ButtonRef";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -29,7 +32,8 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+      <ButtonRef />
+      {/* <ToastContainer />
       <ListGroup
         items={cities}
         heading="Cities"
@@ -48,7 +52,7 @@ function App() {
         onClick={() => toast.warn("Some toast library")}
       >
         Click me
-      </Button>
+      </Button> */}
     </>
   );
 }
