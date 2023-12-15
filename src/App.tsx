@@ -10,6 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import RefCounter from "./components/RefCounter";
 import InputRef from "./components/InputRef";
 import ButtonRef from "./components/ButtonRef";
+import Sidebar from "./components/Sidebar";
+import { ReactDOM } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ContactUsScreen, HomeScreen, NotFoundScreen } from "./pages";
+import { Routes, Route } from "react-router-dom";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -32,7 +37,12 @@ function App() {
 
   return (
     <>
-      <ButtonRef />
+      <Sidebar />
+      <Routes>
+        <Route path="/home" element={<HomeScreen />} />
+        <Route path="/contact" element={<ContactUsScreen />} />
+        <Route path="/not-found" element={<NotFoundScreen />} />
+      </Routes>
       {/* <ToastContainer />
       <ListGroup
         items={cities}
