@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/contact" element={<ContactUsScreen />} />
-        <Route path="/not-found" element={<NotFoundScreen />} />
+        <Route path="*" element={<NotFoundScreen />} />
       </Routes>
       {/* <ToastContainer />
       <ListGroup

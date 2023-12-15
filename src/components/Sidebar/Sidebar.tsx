@@ -19,8 +19,8 @@ const Sidebar = () => {
       </button>
       <div
         className={
-          "offcanvas offcanvas-start fade" +
-          (isShown == true ? " show" : " hiding")
+          "offcanvas offcanvas-start" +
+          (isShown == true ? " fade show" : " hiding")
         }
         tabIndex={-1}
         id="offcanvasExample"
