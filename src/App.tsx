@@ -15,6 +15,7 @@ import { ReactDOM } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ContactUsScreen, HomeScreen, NotFoundScreen } from "./pages";
 import { Routes, Route } from "react-router-dom";
+import CounterMemo from "./components/CounterMemo";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -43,6 +44,7 @@ function App() {
         <Route path="/contact" element={<ContactUsScreen />} />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
+      <CounterMemo />
       {/* <ToastContainer />
       <ListGroup
         items={cities}
