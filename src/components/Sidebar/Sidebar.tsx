@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [isShown, setIsShown] = useState(false);
+  const handleItemClick = () => {
+    setIsShown(!isShown);
+  };
   return (
     <>
       <button
         className="btn btn-secondary"
         type="button"
         data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasExample"
-        aria-controls="offcanvasExample"
+        data-bs-target="#sidebar"
+        aria-controls="sidebar"
         onClick={() => {
           setIsShown(!isShown);
         }}
@@ -23,13 +26,19 @@ const Sidebar = () => {
           (isShown == true ? " fade show" : " hiding")
         }
         tabIndex={-1}
-        id="offcanvasExample"
+        id="sidebar"
         aria-labelledby="offcanvasExampleLabel"
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasExampleLabel">
-            Offcanvas
+            <img
+              src="https://picsum.photos/200"
+              style={{ maxHeight: "100px" }}
+              className="rounded-circle"
+              alt="Cinque Terre"
+            />
           </h5>
+          <span>Becir Isakovic</span>
           <button
             type="button"
             className="btn-close"
@@ -41,51 +50,35 @@ const Sidebar = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <div>
-            Some text as placeholder. In real life you can have the elements you
-            have chosen. Like, text, images, lists, etc.
-          </div>
-          <div className="dropdown mt-3">
+          <nav>
             <ul>
               <li>
-                <Link
-                  onClick={() => {
-                    setIsShown(!isShown);
-                  }}
-                  to="/home"
-                >
+                <Link onClick={handleItemClick} to="/home">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  onClick={() => {
-                    setIsShown(!isShown);
-                  }}
-                  to="/contact"
-                >
+                <Link onClick={handleItemClick} to="/calendar">
+                  Event Calendar
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleItemClick} to="/contact">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link
-                  onClick={() => {
-                    setIsShown(!isShown);
-                  }}
-                  to="/not-found"
-                >
+                <Link onClick={handleItemClick} to="/not-found">
                   Not found page
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
       {isShown && (
         <div
-          onClick={() => {
-            setIsShown(!isShown);
-          }}
+          onClick={handleItemClick}
           className="offcanvas-backdrop fade show"
         ></div>
       )}

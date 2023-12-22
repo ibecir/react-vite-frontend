@@ -19,3 +19,8 @@ export const memoInitialItems = new Array(29_999_999).fill(0).map((_, i) => {
         isSelected: i === 29_999_998
     }
 });
+
+export function shuffle(items: string[]): string[] {
+    const temp = items.sort(() => Math.random() - 0.5)
+    return temp;
+}

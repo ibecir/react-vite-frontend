@@ -1,5 +1,11 @@
+import CounterMemo from "../components/CounterMemo";
+
 const ContactUs = () => {
-  return <div>ContactUs</div>;
+  return (
+    <div>
+      <CounterMemo />
+    </div>
+  );
 };
 
 export default ContactUs;

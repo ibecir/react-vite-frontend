@@ -1,13 +1,16 @@
 import { Item } from "../../utils/types";
 import { MouseEvent, useState } from "react";
+import { useParams } from "react-router-dom";
 
 type ListGroupProps = {
   items: Item[];
-  heading: string;
+  heading?: string;
   onSelectItem: (item: Item) => void;
 };
 
 function ListGroup({ items, heading, onSelectItem }: ListGroupProps) {
+  const { headingProp } = useParams();
+  console.log("HEADING IS ID --> ", headingProp);
   /* props: ListGroupProps */
   // This is the standard when using the useState hook
   // If you can recall from the typescript lecture, this is called array destructuring
@@ -21,7 +24,7 @@ function ListGroup({ items, heading, onSelectItem }: ListGroupProps) {
     <>
       {items.length === 0 && <p>Empty component</p>}
 
-      <h1>{heading}</h1>
+      <h1>{headingProp}</h1>
       <ul className="list-group">
         {items.length === 0 ? (
           <p>No items found</p>

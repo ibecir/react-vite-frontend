@@ -9,7 +9,7 @@ const RefCounter = () => {
     countRef.current += 1;
 
     console.log("State is " + count);
-    console.log("Ref is " + countRef);
+    console.log("Ref is " + countRef.current);
   };
 
   return (

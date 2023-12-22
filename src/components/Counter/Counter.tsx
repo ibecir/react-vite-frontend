@@ -4,11 +4,7 @@ const Counter = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log("Its value is: " + count);
-
-    return () => {
-      console.log("I'm being cleaned up!");
-    };
+    console.log("The count is ", count);
   }, [count]);
 
   return (

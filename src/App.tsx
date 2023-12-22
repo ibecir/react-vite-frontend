@@ -13,9 +13,15 @@ import ButtonRef from "./components/ButtonRef";
 import Sidebar from "./components/Sidebar";
 import { ReactDOM } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { ContactUsScreen, HomeScreen, NotFoundScreen } from "./pages";
+import {
+  ContactUsScreen,
+  EventsScreen,
+  HomeScreen,
+  NotFoundScreen,
+} from "./pages";
 import { Routes, Route } from "react-router-dom";
 import CounterMemo from "./components/CounterMemo";
+import UsersCallback from "./components/UsersCallback";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -42,11 +48,16 @@ function App() {
       <Routes>
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/contact" element={<ContactUsScreen />} />
+        <Route
+          path="/list/item/:headingProp"
+          element={<ListGroup items={[]} onSelectItem={handleSelectItem} />}
+        />
+        <Route path="/calendar" element={<EventsScreen />} />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
-      <CounterMemo />
-      {/* <ToastContainer />
-      <ListGroup
+      {/* <UsersCallback /> */}
+      <ToastContainer />
+      {/* <ListGroup
         items={cities}
         heading="Cities"
         onSelectItem={handleSelectItem}
