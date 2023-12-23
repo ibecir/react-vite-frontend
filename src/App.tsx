@@ -22,6 +22,7 @@ import {
 import { Routes, Route } from "react-router-dom";
 import CounterMemo from "./components/CounterMemo";
 import UsersCallback from "./components/UsersCallback";
+import { configureAxiosInterceptors } from "./services/appAxios.interceptors";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -31,6 +32,7 @@ const handleSelectItem = (item: Item) => {
 };
 
 function App() {
+  configureAxiosInterceptors();
   const [isAlertVisible, setIsAlertVisible] = useState(true);
 
   const handleButtonClick = (event: MouseEvent): void => {

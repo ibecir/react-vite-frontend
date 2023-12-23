@@ -1,5 +1,7 @@
 import { Item } from "./utils/types";
 
+export const BASE_URL = "http://localhost:8080";
+
 export enum ButtonColors {
     "primary" = "primary",
     "secondary" = "secondary",
