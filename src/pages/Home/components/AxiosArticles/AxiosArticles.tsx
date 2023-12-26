@@ -10,15 +10,32 @@ const AxiosArticles = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    ArticleService.getArticles().then((data) => {
-      setArticles(data);
-      setIsLoading(false);
-    });
+    ArticleService.getArticles()
+      .then((data) => {
+        setArticles(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        error.handleGlobally && error.handleGlobally();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
   return (
     <div>
       {isLoading && <div>Loading...</div>}
-      {error && <div>BECIREEEE</div>}
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Unable to render data!</h4>
+          <p>{error?.response?.data?.message || error?.message}</p>
+          <hr />
+          <p className="mb-0">
+            Problem happened and we use a nice way to present it.
+          </p>
+        </div>
+      )}
 
       {!isLoading && (
         <div>

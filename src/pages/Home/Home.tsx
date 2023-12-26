@@ -23,15 +23,3 @@ const Home = () => {
 };
 
 export default Home;
-
-{
-  /* 
-      const handleSelectItem = (item: Item) => {
-        console.log("THE APP ITEM IS ", item);
-      };
-      <ListGroup
-        items={cities}
-        heading="Cities"
-        onSelectItem={handleSelectItem}
-      ></ListGroup> */
-}

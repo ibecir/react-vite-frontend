@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { User } from "../../../../utils/types";
-import { ToastContainer, toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -17,7 +16,8 @@ const UserScheme = Yup.object().shape({
 });
 
 const UsersList = () => {
-  const { data, error, isLoading, isError, refetch } = useUsers();
+  const { data, isLoading, isError, refetch } = useUsers();
+
   const createUser = useCreateUser();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
@@ -31,6 +31,8 @@ const UsersList = () => {
       username: "",
       userType: "",
       password: "",
+      email: "",
+      creationDate: "",
     });
     setShow(false);
   };
@@ -59,7 +61,7 @@ const UsersList = () => {
         },
         onError: (error) => {
           setSubmitting(false);
-          toast.error(error.message);
+          error.handleGlobally && error.handleGlobally();
         },
         onSettled() {
           handleClose();
@@ -71,8 +73,7 @@ const UsersList = () => {
           setSubmitting(false);
         },
         onError: (error) => {
-          setSubmitting(false);
-          toast.error(error.message);
+          error.handleGlobally && error.handleGlobally();
         },
         onSettled() {
           handleClose();
@@ -82,9 +83,19 @@ const UsersList = () => {
   };
   return (
     <div>
-      <ToastContainer />
       {isLoading && <div>Loading...</div>}
-
+      {isError && (
+        <div>
+          <Button
+            variant="primary"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            Refetch data
+          </Button>
+        </div>
+      )}
       {!isLoading && (
         <div>
           <Button variant="primary" onClick={handleShow}>
@@ -102,56 +113,54 @@ const UsersList = () => {
               validationSchema={UserScheme}
               onSubmit={handleSubmit}
             >
-              {({ submiting }) => (
-                <Form>
-                  <Modal.Body>
-                    <div className="row pb-3">
-                      <label htmlFor="name">Full name</label>
-                      <Field
-                        type="text"
-                        name="name"
-                        placeholder="Enter full name"
-                      />
-                      <ErrorMessage name="name" />
-                    </div>
-                    <div className="row pb-3">
-                      <label htmlFor="username">Username</label>
-                      <Field
-                        type="email"
-                        name="username"
-                        placeholder="Enter username"
-                      />
-                      <ErrorMessage name="username" />
-                    </div>
-                    <div className="row pb-3">
-                      <label htmlFor="userType">User Type</label>
-                      <Field
-                        type="text"
-                        name="userType"
-                        placeholder="Enter user type"
-                      />
-                      <ErrorMessage name="userType" />
-                    </div>
-                    <div className="row pb-3">
-                      <label htmlFor="password">Password</label>
-                      <Field
-                        type="password"
-                        name="password"
-                        placeholder="Enter password"
-                      />
-                      <ErrorMessage name="password" />
-                    </div>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button type="submit" variant="primary">
-                      Save
-                    </Button>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Form>
-              )}
+              <Form>
+                <Modal.Body>
+                  <div className="row pb-3">
+                    <label htmlFor="name">Full name</label>
+                    <Field
+                      type="text"
+                      name="name"
+                      placeholder="Enter full name"
+                    />
+                    <ErrorMessage name="name" />
+                  </div>
+                  <div className="row pb-3">
+                    <label htmlFor="username">Username</label>
+                    <Field
+                      type="email"
+                      name="username"
+                      placeholder="Enter username"
+                    />
+                    <ErrorMessage name="username" />
+                  </div>
+                  <div className="row pb-3">
+                    <label htmlFor="userType">User Type</label>
+                    <Field
+                      type="text"
+                      name="userType"
+                      placeholder="Enter user type"
+                    />
+                    <ErrorMessage name="userType" />
+                  </div>
+                  <div className="row pb-3">
+                    <label htmlFor="password">Password</label>
+                    <Field
+                      type="password"
+                      name="password"
+                      placeholder="Enter password"
+                    />
+                    <ErrorMessage name="password" />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button type="submit" variant="primary">
+                    Save
+                  </Button>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Form>
             </Formik>
           </Modal>
           <div className="list-group">
@@ -163,19 +172,29 @@ const UsersList = () => {
                     className="list-group-item list-group-item-action"
                     aria-current="true"
                     key={user.userId}
-                    onClick={() => handleSelectUser(user)}
                   >
                     <div className="d-flex w-100 justify-content-between">
                       <h2 className="mb-1">{user?.username}</h2>
-                      <button
-                        onClick={() => {
-                          handleDeleteUser(user.userId);
-                        }}
-                        type="button"
-                        className="btn btn-outline-danger"
-                      >
-                        Delete
-                      </button>
+                      <div className="btn-group-vertical">
+                        <button
+                          onClick={() => {
+                            handleDeleteUser(user.userId);
+                          }}
+                          type="button"
+                          className="btn btn-outline-danger"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleSelectUser(user);
+                          }}
+                          type="button"
+                          className="btn btn-outline-warning"
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
                     <p className="mb-1">{user?.email}</p>
                     <small>{user?.email + " - " + user?.userType}</small>

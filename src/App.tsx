@@ -1,18 +1,8 @@
 import { MouseEvent, useState } from "react";
-import Alert from "./components/Alert/Alert";
-import Button from "./components/Button";
 import ListGroup from "./components/ListGroup";
 import { Item } from "./utils/types";
-import { ButtonColors } from "./constants";
-import { cities } from "./constants";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import RefCounter from "./components/RefCounter";
-import InputRef from "./components/InputRef";
-import ButtonRef from "./components/ButtonRef";
 import Sidebar from "./components/Sidebar";
-import { ReactDOM } from "react";
-import { BrowserRouter } from "react-router-dom";
 import {
   ContactUsScreen,
   EventsScreen,
@@ -20,9 +10,9 @@ import {
   NotFoundScreen,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
-import CounterMemo from "./components/CounterMemo";
-import UsersCallback from "./components/UsersCallback";
+
 import { configureAxiosInterceptors } from "./services/appAxios.interceptors";
+import { ToastContainer } from "react-toastify";
 
 // https://www.npmjs.com/package/react-toastify
 // https://github.com/fkhadra/react-toastify
@@ -46,6 +36,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <Sidebar />
       <Routes>
         <Route path="/home" element={<HomeScreen />} />
@@ -58,7 +49,6 @@ function App() {
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
       {/* <UsersCallback /> */}
-      <ToastContainer />
       {/* <ListGroup
         items={cities}
         heading="Cities"

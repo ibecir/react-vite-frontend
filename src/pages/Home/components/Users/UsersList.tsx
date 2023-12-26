@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { User } from "../../../../utils/types";
 import { UserService } from "../../../../services";
-import { ToastContainer, toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -32,7 +31,7 @@ const UsersList = () => {
       })
       .catch((error) => {
         setSubmiting(false);
-        toast.error(error.message);
+        error.handleGlobally && error.handleGlobally();
       })
       .finally(() => {
         setSubmiting(false);
@@ -48,7 +47,7 @@ const UsersList = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        toast.error(error.message);
+        error.handleGlobally && error.handleGlobally();
       });
   };
 
@@ -57,7 +56,6 @@ const UsersList = () => {
   }, []);
   return (
     <div>
-      <ToastContainer />
       {isLoading && <div>Loading...</div>}
 
       {!isLoading && (

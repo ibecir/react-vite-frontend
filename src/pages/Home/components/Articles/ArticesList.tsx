@@ -43,6 +43,7 @@ const ArticesList = () => {
         })
         .catch((error) => {
           setError(error);
+          error?.handleGlobally && error.handleGlobally();
         })
         .finally(() => {
           console.log("FINALLY");
