@@ -14,7 +14,7 @@ export const configureAxiosInterceptors = () => {
         return Promise.reject(error);
     });
     appAxios.interceptors.request.use(async (config) => {
-        const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWNpckBiZWNpci5jb20iLCJpYXQiOjE3MDMzNzAwOTcsImV4cCI6MTcwMzM3MTUzN30.-WVGfkPSkWXk700Q8VcJGG8QOBeU4YERChQ0HHrfwE0";
+        const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWNpckBiZWNpci5jb20iLCJpYXQiOjE3MDM1MjE2ODYsImV4cCI6MTcwMzUyMzEyNn0.nXrBPlAyJnbZd-VVFBtkgxR3kHBw68vGh8a9FCbAQnw";
         config.headers.Authorization = token;
         return config;
     });

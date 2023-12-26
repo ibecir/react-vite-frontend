@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../../../../utils/types";
-import { UserService } from "../../../../services";
 import { ToastContainer, toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useCreateUser, useDeleteUser, useUsers } from "../../../../hooks";
+import useUpdateUser from "../../../../hooks/useUpdateUser";
 
 const UserScheme = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -16,45 +17,69 @@ const UserScheme = Yup.object().shape({
 });
 
 const UsersList = () => {
-  const [users, setUsers] = useState<User[]>();
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, error, isLoading, isError, refetch } = useUsers();
+  const createUser = useCreateUser();
+  const updateUser = useUpdateUser();
+  const deleteUser = useDeleteUser();
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setUser({
+      userId: "",
+      name: "",
+      username: "",
+      userType: "",
+      password: "",
+    });
+    setShow(false);
+  };
+  const handleShow = () => {
+    setShow(true);
+  };
 
-  const [submiting, setSubmiting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSelectUser = (user: User) => {
+    setUser(user);
+    handleShow();
+  };
+
+  const handleDeleteUser = (userId: string) => {
+    deleteUser.mutate(userId, {});
+  };
+
   const handleSubmit = (values: User) => {
-    setSubmiting(true);
-    UserService.addUser(values)
-      .then((data) => {
-        refetchUsers();
-      })
-      .catch((error) => {
-        setSubmiting(false);
-        toast.error(error.message);
-      })
-      .finally(() => {
-        setSubmiting(false);
-        handleClose();
+    setSubmitting(true);
+    console.log("THE VALUES ARE ", values);
+    if (user?.userId === "") {
+      createUser.mutate(values, {
+        onSuccess: () => {
+          setSubmitting(false);
+        },
+        onError: (error) => {
+          setSubmitting(false);
+          toast.error(error.message);
+        },
+        onSettled() {
+          handleClose();
+        },
       });
-  };
-
-  const refetchUsers = () => {
-    setIsLoading(true);
-    UserService.getUsers()
-      .then((data) => {
-        setUsers(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error.message);
+    } else {
+      updateUser.mutate(values, {
+        onSuccess: () => {
+          setSubmitting(false);
+        },
+        onError: (error) => {
+          setSubmitting(false);
+          toast.error(error.message);
+        },
+        onSettled() {
+          handleClose();
+        },
       });
+    }
   };
-
-  useEffect(() => {
-    refetchUsers();
-  }, []);
   return (
     <div>
       <ToastContainer />
@@ -73,12 +98,7 @@ const UsersList = () => {
               </Modal.Title>
             </Modal.Header>
             <Formik
-              initialValues={{
-                name: "",
-                username: "",
-                userType: "",
-                password: "",
-              }}
+              initialValues={user}
               validationSchema={UserScheme}
               onSubmit={handleSubmit}
             >
@@ -135,21 +155,33 @@ const UsersList = () => {
             </Formik>
           </Modal>
           <div className="list-group">
-            {users?.map((user) => {
+            {data?.map((user) => {
               return (
-                <a
-                  href="#"
-                  className="list-group-item list-group-item-action"
-                  aria-current="true"
-                  key={user.userId}
-                >
-                  <div className="d-flex w-100 justify-content-between">
-                    <h2 className="mb-1">{user?.username}</h2>
+                <div>
+                  <a
+                    href="#"
+                    className="list-group-item list-group-item-action"
+                    aria-current="true"
+                    key={user.userId}
+                    onClick={() => handleSelectUser(user)}
+                  >
+                    <div className="d-flex w-100 justify-content-between">
+                      <h2 className="mb-1">{user?.username}</h2>
+                      <button
+                        onClick={() => {
+                          handleDeleteUser(user.userId);
+                        }}
+                        type="button"
+                        className="btn btn-outline-danger"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    <p className="mb-1">{user?.email}</p>
+                    <small>{user?.email + " - " + user?.userType}</small>
                     <small>{user?.creationDate}</small>
-                  </div>
-                  <p className="mb-1">{user?.email}</p>
-                  <small>{user?.email + " - " + user?.userType}</small>
-                </a>
+                  </a>
+                </div>
               );
             })}
           </div>

@@ -11,7 +11,7 @@ const ArticesList = () => {
   const abortController = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    const fetchArticles = async () => {
+    const fetchArticlesSync = async () => {
       abortController.current?.abort();
       abortController.current = new AbortController();
       setIsLoading(true);
@@ -33,7 +33,24 @@ const ArticesList = () => {
       }
     };
 
-    fetchArticles();
+    const fetchArticlesChain = () => {
+      fetch(`${BASE_URL}/articles/?page=${page}`)
+        .then((response) => {
+          response.json().then((data) => {
+            setArticles(data);
+            setIsLoading(false);
+          });
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          console.log("FINALLY");
+          setIsLoading(false);
+        });
+    };
+
+    fetchArticlesChain();
   }, [page]);
   return (
     <div>

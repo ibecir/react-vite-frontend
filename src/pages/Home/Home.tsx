@@ -1,6 +1,8 @@
+import ArticleHooks from "./components/ArticleHooks";
 import ArticesList from "./components/Articles/ArticesList";
 import AxiosArticles from "./components/AxiosArticles";
 import UsersList from "./components/Users/UsersList";
+import UsersListHooks from "./components/UsersListHooks";
 
 const Home = () => {
   return (
@@ -10,7 +12,9 @@ const Home = () => {
           <div className="col-sm">
             {/* <ArticesList /> */}
             {/* <AxiosArticles /> */}
-            <UsersList />
+            {/* <UsersList /> */}
+            {/* <ArticleHooks /> */}
+            <UsersListHooks />
           </div>
         </div>
       </div>

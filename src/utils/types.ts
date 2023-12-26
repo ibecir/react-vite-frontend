@@ -20,4 +20,5 @@ export type User = {
     email: string,
     username: string,
     creationDate: string,
+    password: string
 }
