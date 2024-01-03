@@ -2,8 +2,9 @@ import { useSelector } from 'react-redux';
 import TaskItem from '../TaskItem'
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../../../store';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { addTask } from '../../../../store/taskSlice';
+import { useGetBooksQuery } from '../../../../store/bookSlice';
 
 type Props = {}
 
@@ -11,6 +12,18 @@ const TaskList = (props: Props) => {
     const [text, setText] = useState("")
     const { tasks } = useSelector((state: RootState) => state.tasks);
     const dispatch = useDispatch();
+
+    const {
+        data: books,
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+      } = useGetBooksQuery();
+
+    useEffect(() => {
+        console.log(books)
+    }, [books])
 
     const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
