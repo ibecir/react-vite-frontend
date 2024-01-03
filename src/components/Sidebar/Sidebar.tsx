@@ -68,6 +68,11 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
+                <Link onClick={handleItemClick} to="/tasks">
+                  Tasks
+                </Link>
+              </li>
+              <li>
                 <Link onClick={handleItemClick} to="/not-found">
                   Not found page
                 </Link>
