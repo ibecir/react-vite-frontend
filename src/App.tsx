@@ -8,6 +8,7 @@ import {
   EventsScreen,
   HomeScreen,
   NotFoundScreen,
+  TasksScreen,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -39,6 +40,7 @@ function App() {
       <ToastContainer />
       <Sidebar />
       <Routes>
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/contact" element={<ContactUsScreen />} />
         <Route
@@ -46,6 +48,7 @@ function App() {
           element={<ListGroup items={[]} onSelectItem={handleSelectItem} />}
         />
         <Route path="/calendar" element={<EventsScreen />} />
+        <Route path="/tasks" element={<TasksScreen />} />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
       {/* <UsersCallback /> */}

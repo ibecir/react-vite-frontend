@@ -22,3 +22,8 @@ export type User = {
     creationDate: string,
     password: string
 }
+
+export type Task = {
+    id: number,
+    text?: string,
+}

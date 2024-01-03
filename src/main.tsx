@@ -5,6 +5,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,12 +15,14 @@ const queryClient = new QueryClient({
     },
   },
 });
-
+// ...
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </QueryClientProvider>
   // </React.StrictMode>
